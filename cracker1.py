@@ -1,13 +1,19 @@
 import random
 import time
 
+import lottery1
 from cracking import searcher
 from lottery import util
 
 
 def crack_lottery(numbers: list[int], start_timestamp=int(time.time()), interval=1000000):
-    searcher.search(range(start_timestamp, start_timestamp - interval, -1),
-                    lambda seed: cracker(seed, numbers))
+    timestamps = searcher.search(range(start_timestamp, start_timestamp - interval, -1),
+                                 lambda seed: cracker(seed, numbers))
+
+    for timestamp in timestamps:
+        print()
+        print(f"Simulating lottery at timestamp {timestamp}:")
+        lottery1.lottery(timestamp)
 
 
 def cracker(seed: int, numbers: list[int]) -> bool:
